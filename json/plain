@@ -1,0 +1,19 @@
+[
+{% for su in surrogates %}
+{% if forloop.first %}
+{
+{% else %}
+,{
+{% endif %}
+"country":"{{su.country}}",
+"hostname":"{{su.hostname}}",
+"ip":"{{su.ip}}",
+"type":"{{su.type}}",
+"preference":{{su.preference}},
+"time":"{{su.time}}",
+"alive":"{{su.alive}}",
+"continent":"{{su.continent}}",
+"checkpref":{{su.checkpref}},
+"tracefile":"{{su.tracefile}}"}
+{% endfor %}
+]

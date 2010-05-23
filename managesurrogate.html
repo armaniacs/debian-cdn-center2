@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+tr.prefgreen {color: black;}
+tr.prefred {color: red;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Top Page - dccapp</title>
+</head>
+<body>
+
+{{ message }}
+{{ dm }}
+{{ lm }}
+
+<p>
+<a href="{{ url }}">{{ url_linktext }}</a>/ 
+<a href="/managesurrogate">Show Status</a>/ 
+<a href="/checksurrogate">Send Ping to Surrogates</a>
+<p>
+
+<form method="post" action="addsurrogate">
+<table border=6>
+  <caption>surrogates</caption>
+  <tr>
+    <th>ip address</th>
+    <th>type</th>
+    <th>preference</th>
+
+    <th>country (*)</th>
+    <th>continent</th>
+    <th>hostname</th>
+  </tr>
+
+  <tr class="prefadd">
+    <th><input name="ip" type="text" /></th>
+    <th></th>
+    <th>
+      <select name="preference">
+	<option value="10">High</option>
+	<option value="100">Middle</option>
+	<option value="1000">Low</option>
+	<option value="9999">Minimum</option>
+      </select>    
+    </th>
+
+    <th><input name="country" type="text" /></th>
+    <th>
+      <select name="continent">
+	<option value="AF">Africa</option>
+	<option value="AS">Asia</option>
+	<option value="EU">Europe</option>
+	<option value="NA">North America</option>
+	<option value="OC">Oceania</option>
+	<option value="SA">South America</option>
+      </select>    
+    </th>
+    <th>
+      <select name="hostname">
+	<option value="deb.cdn.araki.net">deb.cdn.araki.net</option>
+	<option value="jp.cdn.araki.net">jp.cdn.araki.net</option>
+      </select>
+    </th>
+  </tr>
+
+</table>
+(*)Please fill country name in three-letter country codes. ((ISO-3166, cf. DEU, FRA, JPN, USA))
+<br>
+"Preference" High = 10, Middle = 100, Low = 1000, Minimum = 9999.
+<br>
+<input type="submit" value="add surrogate">
+</form>
+
+
+<hr>
+{% if keika %}
+Process time: {{ keika }} 
+{% endif %}
+<form method="post" action="removesurrogate">
+<input type="submit" value="update">
+<table border=12>
+  <caption>surrogates</caption>
+  <tr>
+    <th>RM</th>
+    <th>no use</th>
+    <th>ip address</th>
+    <th>type</th>
+    <th>preference</th>
+    <th>time</th>
+    <th>lastModifiedTime</th>
+    <th>alive</th>
+    <th>country</th>
+    <th>continent</th>
+    <th>checkpref</th>
+    <th>hostname</th>
+  </tr>
+{% for surrogate in surrogates%}
+  {% if surrogate.checkpref %}
+  <tr class="prefred">
+    {% else %}
+  <tr class="prefgreen">
+    {% endif %}
+    <th>
+      {% if surrogate.remove %}
+      <input name="deleteip" type="checkbox" value="{{ surrogate.ip }}" checked>
+      {% else %}
+      <input name="deleteip" type="checkbox" value="{{ surrogate.ip }}">
+      {% endif %}
+    </th>
+    <th>
+      {% if surrogate.nouse %}
+      <input name="nouseip" type="checkbox" value="{{ surrogate.ip }}" checked>
+      {% else %}
+      <input name="nouseip" type="checkbox" value="{{ surrogate.ip }}">
+      {% endif %}
+    </th>
+    <th>{{ surrogate.ip }}</th>
+    <th>{{ surrogate.type }}</th>
+    <th>{{ surrogate.preference }}</th>
+    <th>{{ surrogate.time }}</th>
+    <th>{{ surrogate.lastModifiedTime }}</th>
+    <th>{{ surrogate.alive }}</th>
+    <th>{{ surrogate.country|escape }}</th>
+    <th>{{ surrogate.continent }}</th>
+    <th>{{ surrogate.checkpref }}</th>
+    <th>{{ surrogate.hostname }}</th>
+  </tr>
+{% endfor %}
+
+</table>
+<input type="submit" value="update">
+</form>
+<br>
+<a href="{{ url }}">{{ url_linktext }}</a>
+
+</body>
+</html>
