@@ -24,6 +24,10 @@ handlers:
   script: managesurrogate.py
   login: admin
 
+- url: /resetcheckpref
+  script: resetcheckpref.py
+  login: admin
+
 - url: /addsurrogate
   script: managesurrogate.py
   login: admin
