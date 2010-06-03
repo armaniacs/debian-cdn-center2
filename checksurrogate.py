@@ -30,11 +30,9 @@ class CheckSurrogate(webapp.RequestHandler):
         surrogates = Surrogate.all().order('checkpref').order('time')
         
         for surrogate in surrogates:
-            if check_server_count >= 70:
+            if check_server_count >= 100:
                 break
-            if surrogate.checkpref > 100:
-                continue
-
+            
             ttmp = datetime.datetime.now()
             keika = ttmp - t1
             if keika > datetime.timedelta(0,20):
@@ -55,7 +53,7 @@ class CheckSurrogate(webapp.RequestHandler):
                 dm = 'go check'
                 k = surrogate.ip
                 req = urllib2.Request(url="http://" + k + '/debian/project/trace/' + tracefile)
-                req.add_header('User-Agent',"Debian-cdn-mirror-ping/1.2")
+                req.add_header('User-Agent',"Debian-cdn-mirror-ping/1.3")
                 try:
                     f = urllib2.urlopen(req)
                     lm = f.info()['Last-Modified']

@@ -15,6 +15,7 @@ from google.appengine.ext.webapp import template
 class MainPage(webapp.RequestHandler):
   def get(self):
     surrogates = Surrogate.all().order('checkpref').order('country')
+    alive_surrogates = Surrogate.all().filter('alive =', 'True')
 
     if users.get_current_user():
       url = users.create_logout_url(self.request.uri)
@@ -23,8 +24,12 @@ class MainPage(webapp.RequestHandler):
       url = users.create_login_url(self.request.uri)
       url_linktext = 'Login'
 
+    alive_surrogates = db.GqlQuery("SELECT * FROM Surrogate WHERE alive = True")
+      
     template_values = {
       'surrogates': surrogates,
+      'num_all': surrogates.count(),
+      'num_alive': alive_surrogates.count(),
       'url': url,
       'url_linktext': url_linktext,
       }

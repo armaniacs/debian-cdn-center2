@@ -23,7 +23,7 @@ class ResetPrefSurrogate(webapp.RequestHandler):
         surrogates = db.GqlQuery("SELECT * FROM Surrogate WHERE checkpref > 100")
             
         for surrogate in surrogates:
-            surrogate.checkpref = 0
+            surrogate.checkpref = 50
             surrogate.put()
             
         if users.get_current_user():

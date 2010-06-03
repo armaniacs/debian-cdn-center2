@@ -18,3 +18,4 @@ class Surrogate(db.Model):
     tracefile = db.StringProperty()
     lastModifiedTime = db.DateTimeProperty()
     nouse = db.BooleanProperty()
+    failreason = db.StringProperty()

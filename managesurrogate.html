@@ -9,16 +9,24 @@ tr.prefred {color: red;}
 <title>Top Page - dccapp</title>
 </head>
 <body>
-
-{{ message }}
-{{ dm }}
-{{ lm }}
-
 <p>
 <a href="{{ url }}">{{ url_linktext }}</a>/ 
 <a href="/managesurrogate">Show Status</a>/ 
-<a href="/checksurrogate">Send Ping to Surrogates</a>
+<a href="/checksurrogate">Send Ping to Surrogates</a>/
+<a href="/resetcheckpref">Reset 'checkpref' over 100 to 0</a>
+</p>
 <p>
+{{ message }}
+{{ dm }}
+{{ lm }}
+</p>
+
+{% if num_all and num_alive %}
+<p>
+  num of watching servers: {{ num_all }}
+  (alive: {{ num_alive }})
+</p>
+{% endif %}
 
 <form method="post" action="addsurrogate">
 <table border=6>

@@ -45,6 +45,12 @@ indexes:
 
 - kind: Surrogate
   properties:
+  - name: checkpref
+    direction: desc
+  - name: time
+
+- kind: Surrogate
+  properties:
   - name: country
   - name: checkpref
 
