@@ -19,7 +19,7 @@ class CheckSurrogate(webapp.RequestHandler):
         socket.timeout(1)
         
         check_server_count = 0
-        check_period = 120
+        check_period = 600
         t1 = datetime.datetime.now()
         message = ''
         lm = ''
@@ -32,14 +32,16 @@ class CheckSurrogate(webapp.RequestHandler):
         for surrogate in surrogates:
             if check_server_count >= 100:
                 break
-            
+            if surrogate.checkpref > 150:
+                continue
+
             ttmp = datetime.datetime.now()
             keika = ttmp - t1
             if keika > datetime.timedelta(0,20):
                 break
 
             if surrogate.checkpref:
-                surrogate.checkpref += surrogate.checkpref
+                surrogate.checkpref += int(surrogate.checkpref)
             else:
                 surrogate.checkpref = 0
                 

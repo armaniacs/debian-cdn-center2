@@ -1,7 +1,7 @@
 cron:
 - description: every min surrogate dead or alive checker
   url: /checksurrogate
-  schedule: every 1 minutes
-- description: every day surrogate reset
+  schedule: every 2 minutes
+- description: every day checkpref reset
   url: /resetcheckpref
   schedule: every 24 hours
