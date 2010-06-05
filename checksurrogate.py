@@ -19,7 +19,7 @@ class CheckSurrogate(webapp.RequestHandler):
         socket.timeout(1)
         
         check_server_count = 0
-        check_period = 6
+        check_period = 600
         mirrordelay = 86400
         t1 = datetime.datetime.now()
         message = ''
