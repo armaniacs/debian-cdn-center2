@@ -19,7 +19,8 @@ class CheckSurrogate(webapp.RequestHandler):
         socket.timeout(1)
         
         check_server_count = 0
-        check_period = 600
+        check_period = 6
+        mirrordelay = 86400
         t1 = datetime.datetime.now()
         message = ''
         lm = ''
@@ -60,22 +61,32 @@ class CheckSurrogate(webapp.RequestHandler):
                     f = urllib2.urlopen(req)
                     lm = f.info()['Last-Modified']
                     message = f.read()
-                    surrogate.alive = True
-                    surrogate.checkpref = 0
                     lmt = datetime.datetime.strptime(lm, "%a, %d %b %Y %H:%M:%S GMT")
                     surrogate.lastModifiedTime = lmt
+                    if surrogate.time - lmt > datetime.timedelta(0,mirrordelay):
+                        surrogate.alive = False
+                        surrogate.checkpref += 1
+                        surrogate.failreason = "DELAY"
+                    else:
+                        surrogate.alive = True
+                        surrogate.checkpref = 0
+                        surrogate.failreason = ""
+
                 except urllib2.HTTPError, e:
                     message += "%s is not working. (HTTP error)" % (k)
                     surrogate.alive = False
                     surrogate.checkpref += 1
+                    surrogate.failreason = "E:HTTP"
                 except urllib2.URLError, e:
                     message += "%s is not working. (URL error)" % (k)
                     surrogate.alive = False
                     surrogate.checkpref += 1
+                    surrogate.failreason = "E:URL"
                 except:
                     message += "%s is not working. " % (k)
                     surrogate.alive = False
                     surrogate.checkpref += 1
+                    surrogate.failreason = "E:NO WORK"
 
                 surrogate.put()
             else:

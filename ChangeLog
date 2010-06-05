@@ -1,0 +1,10 @@
+2010-06-05  ARAKI Yasuhiro  <ar@debian.org>
+
+	* models.py (Surrogate): add failreason.
+
+	* managesurrogate.html: add to show 'remark'.
+
+	* checksurrogate.py (CheckSurrogate.get): When mirorr takes more than 24 hours from ries.debian.org to surrogate, 'alive' status of this surrogate will change 'False'. And add 'failreason'.
+
+	* managesurrogate.html: add link to geolocation.
+

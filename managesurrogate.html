@@ -9,11 +9,12 @@ tr.prefred {color: red;}
 <title>Top Page - dccapp</title>
 </head>
 <body>
-  <a href="http://wiki.debian.org/DebianGeoMirror" target="_blank">About(wiki)</a>
+  <a href="http://wiki.debian.org/DebianGeoMirror" target="_blank">About(wiki)</a> /
+  <a href="http://www.geoipview.com/?ref=ext_siteip" target="_blank">Your location</a>
 <p>
-<a href="{{ url }}">{{ url_linktext }}</a>/ 
-<a href="/managesurrogate">Show Status</a>/ 
-<a href="/checksurrogate">Send Ping to Surrogates</a>/
+<a href="{{ url }}">{{ url_linktext }}</a> / 
+<a href="/managesurrogate">Show Status</a> / 
+<a href="/checksurrogate">Send Ping to Surrogates</a> /
 <a href="/resetcheckpref">Reset 'checkpref' over 100 to 50</a>
 </p>
 <p>
@@ -102,6 +103,7 @@ Process time: {{ keika }}
     <th>country</th>
     <th>continent</th>
     <th>checkpref</th>
+    <th>remark</th>
     <th>hostname</th>
   </tr>
 {% for surrogate in surrogates%}
@@ -124,7 +126,9 @@ Process time: {{ keika }}
       <input name="nouseip" type="checkbox" value="{{ surrogate.ip }}">
       {% endif %}
     </th>
-    <th><a href="http://{{ surrogate.ip }}/debian" target="_blank">{{ surrogate.ip }}</a></th>
+    <th><a href="http://{{ surrogate.ip }}/debian/" target="_blank">{{ surrogate.ip }}</a>
+      (<a href="http://www.geoipview.com/?q={{ surrogate.ip }}&x=0&y=0" target="_blank">L</a>)
+    </th>
     <th>{{ surrogate.type }}</th>
     <th>{{ surrogate.preference }}</th>
     <th>{{ surrogate.time }}</th>
@@ -133,6 +137,7 @@ Process time: {{ keika }}
     <th>{{ surrogate.country|escape }}</th>
     <th>{{ surrogate.continent }}</th>
     <th>{{ surrogate.checkpref }}</th>
+    <th>{{ surrogate.failreason }}</th>
     <th>{{ surrogate.hostname }}</th>
   </tr>
 {% endfor %}
@@ -142,6 +147,5 @@ Process time: {{ keika }}
 </form>
 <br>
 <a href="{{ url }}">{{ url_linktext }}</a>
-
 </body>
 </html>
