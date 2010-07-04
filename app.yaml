@@ -18,7 +18,11 @@ handlers:
 
 - url: /resetcheckpref
   script: resetcheckpref.py
-  login: admin  
+  login: admin
+
+- url: /resetfull
+  script: resetfull.py
+  login: admin    
 
 - url: /deletesurrogate
   script: managesurrogate.py

@@ -1,3 +1,11 @@
+2010-07-05  ARAKI Yasuhiro  <ar@debian.org>
+
+	* managesurrogate.html: add link to resetfull.py.
+
+	* checksurrogate.py (CheckSurrogate.get): mirror period check change from 1day to 1week.
+
+	* resetfull.py (ResetPrefFull.get): add new file.
+
 2010-06-05  ARAKI Yasuhiro  <ar@debian.org>
 
 	* models.py (Surrogate): add failreason.
