@@ -47,11 +47,9 @@ class RemoveSurrogate(webapp.RequestHandler):
       url = users.create_login_url(self.request.uri)
       url_linktext = 'Login'
 
-    deleteips = self.request.get("deleteip", allow_multiple=True)
-    for deleteip in deleteips:
-      q = db.GqlQuery("SELECT * FROM Surrogate WHERE ip = :1", deleteip)
-      results = q.fetch(10)
-      db.delete(results)
+    deleteids = self.request.get("deleteid", allow_multiple=True)
+    for deleteid in deleteids:
+      db.delete(db.Key(deleteid))
 
 
 #     nouseips = self.request.get("nouseip", allow_multiple=True)
@@ -75,6 +73,7 @@ class AddSurrogate(webapp.RequestHandler):
     s_country = self.request.get("country")
     s_continent = self.request.get("continent")
     s_hostname = self.request.get("hostname")
+    s_targetnet = self.request.get("targetnet")
 
     if helptool.ipFormatCheck(s_ip):
       if helptool.countryFormatCheck(s_country):
@@ -83,6 +82,8 @@ class AddSurrogate(webapp.RequestHandler):
         surrogate.continent = s_continent
         surrogate.country = s_country
         surrogate.hostname = s_hostname
+        if helptool.targetnetFormatCheck(s_targetnet):
+          surrogate.targetnet = s_targetnet
         surrogate.put()
 
     self.redirect("/managesurrogate")

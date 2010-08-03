@@ -32,16 +32,17 @@ tr.prefred {color: red;}
 {% endif %}
 
 <form method="post" action="addsurrogate">
-<table border=6>
+<table border=7>
   <caption>surrogates</caption>
   <tr>
     <th>ip address</th>
     <th>type</th>
     <th>preference</th>
 
-    <th>country (*)</th>
+    <th>country (*1)</th>
     <th>continent</th>
     <th>hostname</th>
+    <th>targetnet(*2)</th>
   </tr>
 
   <tr class="prefadd">
@@ -73,10 +74,13 @@ tr.prefred {color: red;}
 	<option value="jp.cdn.araki.net">jp.cdn.araki.net</option>
       </select>
     </th>
+    <th><input name="targetnet" type="text" /></th>
   </tr>
 
 </table>
-(*)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
+(*1)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
+<br>
+(*2)cf. "128.59.0.0/16", "130.34.0.0/16"
 <br>
 "Preference" High = 10, Middle = 100, Low = 1000, Minimum = 9999.
 <br>
@@ -90,7 +94,7 @@ Process time: {{ keika }}
 {% endif %}
 <form method="post" action="removesurrogate">
 <input type="submit" value="update">
-<table border=12>
+<table border=13>
   <caption>surrogates</caption>
   <tr>
     <th>RM</th>
@@ -106,6 +110,7 @@ Process time: {{ keika }}
     <th>checkpref</th>
     <th>remark</th>
     <th>hostname</th>
+    <th>targetnet</th>
   </tr>
 {% for surrogate in surrogates%}
   {% if surrogate.checkpref %}
@@ -115,9 +120,9 @@ Process time: {{ keika }}
     {% endif %}
     <th>
       {% if surrogate.remove %}
-      <input name="deleteip" type="checkbox" value="{{ surrogate.ip }}" checked>
+      <input name="deleteid" type="checkbox" value="{{ surrogate.key }}" checked>
       {% else %}
-      <input name="deleteip" type="checkbox" value="{{ surrogate.ip }}">
+      <input name="deleteid" type="checkbox" value="{{ surrogate.key }}">
       {% endif %}
     </th>
     <th>
@@ -140,6 +145,7 @@ Process time: {{ keika }}
     <th>{{ surrogate.checkpref }}</th>
     <th>{{ surrogate.failreason }}</th>
     <th>{{ surrogate.hostname }}</th>
+    <th>{{ surrogate.targetnet }}</th>
   </tr>
 {% endfor %}
 

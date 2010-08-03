@@ -19,3 +19,4 @@ class Surrogate(db.Model):
     lastModifiedTime = db.DateTimeProperty()
     nouse = db.BooleanProperty()
     failreason = db.StringProperty()
+    targetnet = db.StringProperty()

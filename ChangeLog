@@ -1,3 +1,13 @@
+2010-08-03  ARAKI Yasuhiro  <ar@debian.org>
+
+	* json/plain: Add to show "targetnet".
+
+2010-08-01  ARAKI Yasuhiro  <ar@debian.org>
+
+	* managesurrogate.py (RemoveSurrogate.post): Change entry deleting method.
+
+	* helptool.py (targetnetFormatCheck): new.
+
 2010-07-05  ARAKI Yasuhiro  <ar@debian.org>
 
 	* managesurrogate.html: add link to resetfull.py.
