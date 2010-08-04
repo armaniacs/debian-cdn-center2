@@ -13,8 +13,8 @@
 "time":"{{su.time}}",
 "alive":"{{su.alive}}",
 "continent":"{{su.continent}}",
-"checkpref":{{su.checkpref}},
-"targetnet":{{su.targetnet}},
+"checkpref":"{{su.checkpref}}",
+"targetnet":"{{su.targetnet}}",
 "tracefile":"{{su.tracefile}}"}
 {% endfor %}
 ]
