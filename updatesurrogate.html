@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+.prefgreen {color: black;}
+.prefred {color: red;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Top Page - dccapp</title>
+</head>
+
+<body>
+<form method="post" action="updatesurrogate">
+  <input name="id" type="hidden" value="{{ surrogate.key }}" />
+  <dl>
+    <dt>ip address</dt>
+    <dd><input name="ip" type="text" value="{{ surrogate.ip }}" /></dd>
+    <dt>preference</dt>
+    <dd><input name="preference" type="text" value="{{ surrogate.preference }}" /></dd>
+    <dt>country (*1)</dt>
+    <dd><input name="country" type="text" value="{{ surrogate.country }}" /></dd>
+    <dt>continent</dt>
+    <dd><input name="continent" type="text" value="{{ surrogate.continent }}" /></dd>
+    <dt>hostname</dt>
+    <dd><input name="hostname" type="text" value="{{ surrogate.hostname }}" /></dd>
+    <dt>targetnet(*2)</dt>
+    <dd>
+      {% if surrogate.targetnet %}
+      <input name="targetnet" type="text" value="{{ surrogate.targetnet }}" />
+      {% else %}
+      <input name="targetnet" type="text" /><span class="prefred">UPDATE</span>
+      {% endif %}      
+    </dd> 
+  </dl>
+
+(*1)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
+<br>
+(*2)cf. "128.59.0.0/16", "130.34.0.0/16"
+<br>
+"Preference" High = 10, Middle = 100, Low = 1000, Minimum = 9999.
+<br>
+<input type="submit" value="Update surrogate">
+</form>
+
+</body>
+</html>

@@ -51,14 +51,56 @@ class RemoveSurrogate(webapp.RequestHandler):
     for deleteid in deleteids:
       db.delete(db.Key(deleteid))
 
-
-#     nouseips = self.request.get("nouseip", allow_multiple=True)
-#     for nouseip in nouseips:
-#       surrogate = Surrogate(ip = nouseip)
-#       surrogate.nouse = True
-
     self.redirect("/managesurrogate")
 
+class PickSurrogate(webapp.RequestHandler):
+  def get(self):
+    if users.get_current_user():
+      url = users.create_logout_url(self.request.uri)
+      url_linktext = 'Logout'
+    else:
+      url = users.create_login_url(self.request.uri)
+      url_linktext = 'Login'
+
+    entity = db.get(self.request.get("id"))
+
+    template_values = {
+      'surrogate': entity,
+      }
+
+    path = os.path.join(os.path.dirname(__file__), 'updatesurrogate.html')
+    self.response.out.write(template.render(path, template_values))
+
+class UpdateSurrogate(webapp.RequestHandler):
+  def post(self):
+    if users.get_current_user():
+      url = users.create_logout_url(self.request.uri)
+      url_linktext = 'Logout'
+    else:
+      url = users.create_login_url(self.request.uri)
+      url_linktext = 'Login'
+
+    surrogate = db.get(self.request.get("id"))
+    s_ip = self.request.get("ip")
+    s_preference = self.request.get("preference")
+    s_country = self.request.get("country")
+    s_continent = self.request.get("continent")
+    s_hostname = self.request.get("hostname")
+    s_targetnet = self.request.get("targetnet")
+
+    if helptool.ipFormatCheck(s_ip):
+      if helptool.countryFormatCheck(s_country):
+        surrogate.ip = s_ip 
+        surrogate.preference = int(s_preference)
+        surrogate.continent = s_continent
+        surrogate.country = s_country
+        surrogate.hostname = s_hostname
+        if helptool.targetnetFormatCheck(s_targetnet):
+          surrogate.targetnet = s_targetnet
+        surrogate.put()
+
+    self.redirect("/managesurrogate")
+    
 class AddSurrogate(webapp.RequestHandler):
   def post(self):
     if users.get_current_user():
@@ -91,6 +133,8 @@ class AddSurrogate(webapp.RequestHandler):
 application = webapp.WSGIApplication(
   [("/managesurrogate", MainPage),
    ('/removesurrogate', RemoveSurrogate),
+   ('/updatesurrogate', UpdateSurrogate),
+   ('/picksurrogate', PickSurrogate),
    ('/addsurrogate', AddSurrogate)],
   debug=True)
 
