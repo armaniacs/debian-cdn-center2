@@ -15,11 +15,9 @@ from google.appengine.ext.webapp import template
 class PlainAlive(webapp.RequestHandler):
   def get(self):
     surrogates = Surrogate.all().order('country').order('hostname').filter('alive =',True)
-
     template_values = {
       'surrogates': surrogates
       }
-
     path = os.path.join(os.path.dirname(__file__), 'json/plain')
     self.response.headers['Content-Type'] = "application/json"
     self.response.out.write(template.render(path, template_values))
@@ -27,11 +25,29 @@ class PlainAlive(webapp.RequestHandler):
 class PlainAll(webapp.RequestHandler):
   def get(self):
     surrogates = Surrogate.all().order('country').order('hostname')
-
     template_values = {
       'surrogates': surrogates
       }
+    path = os.path.join(os.path.dirname(__file__), 'json/plain')
+    self.response.headers['Content-Type'] = "application/json"
+    self.response.out.write(template.render(path, template_values))
 
+class CnameAlive(webapp.RequestHandler):
+  def get(self):
+    surrogates = Surrogate.all().order('country').order('hostname').filter('type =',"CNAME").filter('alive =',True)
+    template_values = {
+      'surrogates': surrogates
+      }
+    path = os.path.join(os.path.dirname(__file__), 'json/plain')
+    self.response.headers['Content-Type'] = "application/json"
+    self.response.out.write(template.render(path, template_values))
+
+class CnameAll(webapp.RequestHandler):
+  def get(self):
+    surrogates = Surrogate.all().order('country').order('hostname').filter('type =',"CNAME")
+    template_values = {
+      'surrogates': surrogates
+      }
     path = os.path.join(os.path.dirname(__file__), 'json/plain')
     self.response.headers['Content-Type'] = "application/json"
     self.response.out.write(template.render(path, template_values))
@@ -39,7 +55,9 @@ class PlainAll(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
   [("/json/alive", PlainAlive),
-   ("/json/all", PlainAll)
+   ("/json/all", PlainAll),
+   ("/json/cname/all", CnameAll),
+   ("/json/cname/alive", CnameAlive)
    ],
   debug=True)
 

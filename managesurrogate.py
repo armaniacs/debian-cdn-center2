@@ -87,6 +87,7 @@ class UpdateSurrogate(webapp.RequestHandler):
     s_continent = self.request.get("continent")
     s_hostname = self.request.get("hostname")
     s_targetnet = self.request.get("targetnet")
+    s_type = self.request.get("type")
 
     if helptool.ipFormatCheck(s_ip):
       if helptool.countryFormatCheck(s_country):
@@ -95,6 +96,7 @@ class UpdateSurrogate(webapp.RequestHandler):
         surrogate.continent = s_continent
         surrogate.country = s_country
         surrogate.hostname = s_hostname
+        surrogate.type = s_type
         if helptool.targetnetFormatCheck(s_targetnet):
           surrogate.targetnet = s_targetnet
         surrogate.put()

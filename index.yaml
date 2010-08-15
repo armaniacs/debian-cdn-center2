@@ -29,6 +29,13 @@ indexes:
 
 - kind: Surrogate
   properties:
+  - name: alive
+  - name: type
+  - name: country
+  - name: hostname
+
+- kind: Surrogate
+  properties:
   - name: alive=
   - name: checkpref
   - name: country
@@ -70,3 +77,9 @@ indexes:
   - name: preference=
   - name: checkpref
   - name: country
+
+- kind: Surrogate
+  properties:
+  - name: type
+  - name: country
+  - name: hostname
