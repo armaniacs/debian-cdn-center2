@@ -15,6 +15,15 @@
   <dl>
     <dt>ip address</dt>
     <dd><input name="ip" type="text" value="{{ surrogate.ip }}" /></dd>
+    <dt>type</dt>
+    <dd>
+      <select name="type">
+	<option value="{{ surrogate.type }}">{{ surrogate.type }}
+	<option value="">None
+	<option value="CNAME">CNAME
+      </select>
+      If {{ surrogate.ip }} is <a href="http://httpd.apache.org/docs/2.0/en/vhosts/name-based.html">Name-based Virtual Host</a>, select "CNAME".
+    </dd>
     <dt>preference</dt>
     <dd><input name="preference" type="text" value="{{ surrogate.preference }}" /></dd>
     <dt>country (*1)</dt>
