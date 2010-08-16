@@ -56,7 +56,8 @@ class CheckSurrogate(webapp.RequestHandler):
                 dm = 'go check'
                 k = surrogate.ip
                 req = urllib2.Request(url="http://" + k + '/debian/project/trace/' + tracefile)
-                req.add_header('User-Agent',"Debian-cdn-mirror-ping/1.3")
+                req.add_header('User-Agent',"Debian-cdn-mirror-ping/1.4")
+                req.add_header('Host',"cdn.debian.net")
                 try:
                     f = urllib2.urlopen(req)
                     lm = f.info()['Last-Modified']
