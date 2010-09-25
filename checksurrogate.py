@@ -36,14 +36,14 @@ class CheckSurrogate(webapp.RequestHandler):
         surrogates = Surrogate.all().order('checkpref').order('time')
         
         for surrogate in surrogates:
-            if check_server_count >= 100 and not is_dev(): #remote_addr != "127.0.0.1":
+            if check_server_count >= 100 and not is_dev():
                 break
-            if surrogate.checkpref > 150 and not is_dev(): #remote_addr != "127.0.0.1":
+            if surrogate.checkpref > 150 and not is_dev():
                 continue
 
             ttmp = datetime.datetime.now()
             keika = ttmp - t1
-            if keika > datetime.timedelta(0,20) and not is_dev(): #remote_addr != "127.0.0.1":
+            if keika > datetime.timedelta(0,20) and not is_dev():
                 break
 
             if surrogate.checkpref:
@@ -56,7 +56,6 @@ class CheckSurrogate(webapp.RequestHandler):
             else:
                 tracefile = 'ftp-master.debian.org'
 
-            # XXX
             if surrogate.type == "CNAME":
                 check_server_count += 1
                 dm = 'go check'
@@ -89,7 +88,15 @@ class CheckSurrogate(webapp.RequestHandler):
                     message = ''
                     lmt = datetime.datetime.strptime(lm, "%a, %d %b %Y %H:%M:%S GMT")
                     surrogate.lastModifiedTime = lmt
-
+                    if surrogate.time - lmt > datetime.timedelta(0,mirrordelay):
+                        surrogate.alive = False
+                        surrogate.checkpref += 1
+                        surrogate.failreason = "DELAY"
+                    else:
+                        surrogate.alive = True
+                        surrogate.checkpref = 0
+                        surrogate.failreason = ""
+                      
                 except urllib2.HTTPError, e:
                     message += "%s is not working. (HTTP error)" % (k)
                     surrogate.alive = False
@@ -107,21 +114,12 @@ class CheckSurrogate(webapp.RequestHandler):
                     surrogate.alive = False
                     surrogate.checkpref += 1
                     surrogate.failreason = "E:NO WORK"
-                    logging.info(message)
-                    
-                if surrogate.time - lmt > datetime.timedelta(0,mirrordelay):
-                    surrogate.alive = False
-                    surrogate.checkpref += 1
-                    surrogate.failreason = "DELAY"
-                else:
-                    surrogate.alive = True
-                    surrogate.checkpref = 0
-                    surrogate.failreason = ""
+                    logging.info(message)                    
                 surrogate.put()
 
             else:
                 dm = 'no check: ' + "%s is checked less than %d sec ago (surrogate.time %s, %s)" % (surrogate.ip,check_period,surrogate.time,t1)
-
+               
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
