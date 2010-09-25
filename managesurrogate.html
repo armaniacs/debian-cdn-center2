@@ -13,11 +13,15 @@ tr.prefred {color: red;}
   <a href="http://www.geoipview.com/?ref=ext_siteip" target="_blank">Your location</a> /
   <a href="https://asn.cymru.com/cgi-bin/whois.cgi">cymru.com IP to ASN lookup</a>
 <p>
-<a href="{{ url }}">{{ url_linktext }}</a> / 
+<a href="{{ url }}">{{ url_linktext }}</a> /
+<a href="/">List</a> /
+
+{% if f_login %}
 <a href="/managesurrogate">Show Status</a> / 
 <a href="/checksurrogate">Send Ping to Surrogates</a> /
 <a href="/resetcheckpref">Reset 'checkpref' over 100 to 50</a> //
 [[<a href="/resetfull">Reset for emergency</a>]]
+{% endif %}
 </p>
 <p>
 {{ message }}
@@ -32,6 +36,7 @@ tr.prefred {color: red;}
 </p>
 {% endif %}
 
+{% if f_login %}
 <form method="post" action="addsurrogate">
 <table border=6>
   <caption>surrogates</caption>
@@ -83,16 +88,19 @@ You can check your BGP Prefix by whois -h whois.cymru.com " -v 1.2.3.4".
 <br>
 (*3)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
 <br>
-
-
 <input type="submit" value="add surrogate">
 </form>
+{% endif %}
+
 <hr>
 {% if keika %}
 Process time: {{ keika }} 
 {% endif %}
+
+{% if f_login %}
 <form method="post" action="removesurrogate">
 <input type="submit" value="update">
+{% endif %}
 <table border=11>
   <tr>
     <th>Delete</th>
@@ -115,10 +123,12 @@ Process time: {{ keika }}
   <tr class="prefgreen">
     {% endif %}
     <th>
+      {% if f_login %}
       {% if surrogate.remove %}
       <input name="deleteid" type="checkbox" value="{{ surrogate.key }}" checked>
       {% else %}
       <input name="deleteid" type="checkbox" value="{{ surrogate.key }}">
+      {% endif %}
       {% endif %}
     </th>
 
@@ -141,8 +151,10 @@ Process time: {{ keika }}
 {% endfor %}
 
 </table>
+{% if f_login %}
 <input type="submit" value="update">
 </form>
+{% endif %}
 <br>
 <a href="{{ url }}">{{ url_linktext }}</a>
 <hr>

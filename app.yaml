@@ -55,5 +55,8 @@ handlers:
 - url: /json/.*
   script: json.py
 
+- url: /
+  script: managesurrogate.py
+  
 - url: .*
   script: main.py

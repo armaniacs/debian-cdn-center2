@@ -20,10 +20,11 @@ class MainPage(webapp.RequestHandler):
     if users.get_current_user():
       url = users.create_logout_url(self.request.uri)
       url_linktext = 'Logout'
+      f_login = True
     else:
       url = users.create_login_url(self.request.uri)
       url_linktext = 'Login'
-
+      f_login = False
     alive_surrogates = db.GqlQuery("SELECT * FROM Surrogate WHERE alive = True")
       
     template_values = {
@@ -32,6 +33,7 @@ class MainPage(webapp.RequestHandler):
       'num_alive': alive_surrogates.count(),
       'url': url,
       'url_linktext': url_linktext,
+      'f_login': f_login,
       }
 
     path = os.path.join(os.path.dirname(__file__), 'managesurrogate.html')
@@ -134,6 +136,7 @@ class AddSurrogate(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
   [("/managesurrogate", MainPage),
+   ('/', MainPage),
    ('/removesurrogate', RemoveSurrogate),
    ('/updatesurrogate', UpdateSurrogate),
    ('/picksurrogate', PickSurrogate),
