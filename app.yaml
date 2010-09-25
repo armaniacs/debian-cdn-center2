@@ -57,6 +57,10 @@ handlers:
 
 - url: /
   script: managesurrogate.py
+
+- url: /testing
+  script: testing.py  
+  login: admin
   
 - url: .*
   script: main.py

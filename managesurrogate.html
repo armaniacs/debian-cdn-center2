@@ -1,40 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<style type="text/css">
-tr.prefgreen {color: black;}
-tr.prefred {color: red;}
-</style>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Top Page - dccapp</title>
-</head>
-<body>
-  <a href="http://wiki.debian.org/DebianGeoMirror" target="_blank">About(wiki)</a> /
-  <a href="http://www.geoipview.com/?ref=ext_siteip" target="_blank">Your location</a> /
-  <a href="https://asn.cymru.com/cgi-bin/whois.cgi">cymru.com IP to ASN lookup</a>
-<p>
-<a href="{{ url }}">{{ url_linktext }}</a> /
-<a href="/">List</a> /
+{% extends "base.html" %}
 
-{% if f_login %}
-<a href="/managesurrogate">Show Status</a> / 
-<a href="/checksurrogate">Send Ping to Surrogates</a> /
-<a href="/resetcheckpref">Reset 'checkpref' over 100 to 50</a> //
-[[<a href="/resetfull">Reset for emergency</a>]]
-{% endif %}
-</p>
-<p>
-{{ message }}
-{{ dm }}
-{{ lm }}
-</p>
-
-{% if num_all and num_alive %}
-<p>
-  num of watching servers: {{ num_all }}
-  (alive: {{ num_alive }})
-</p>
-{% endif %}
+{% block content %}
 
 {% if f_login %}
 <form method="post" action="addsurrogate">
@@ -155,10 +121,6 @@ Process time: {{ keika }}
 <input type="submit" value="update">
 </form>
 {% endif %}
-<br>
-<a href="{{ url }}">{{ url_linktext }}</a>
-<hr>
-If you have comment, request or suggestion?
-<address> Please mail to: ar at debian.org, ARAKI, Yasuhiro.</address>
-</body>
-</html>
+
+{% endblock %}
+

@@ -1,15 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<style type="text/css">
-.prefgreen {color: black;}
-.prefred {color: red;}
-</style>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Top Page - dccapp</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block content %}
+
 <form method="post" action="updatesurrogate">
   <input name="id" type="hidden" value="{{ surrogate.key }}" />
   <dl>
@@ -22,7 +14,7 @@
 	<option value="">None
 	<option value="CNAME">CNAME
       </select>
-      If {{ surrogate.ip }} is <a href="http://httpd.apache.org/docs/2.0/en/vhosts/name-based.html">Name-based Virtual Host</a>, select "CNAME".
+      If <b>"{{ surrogate.ip }}"</b> is <a href="http://httpd.apache.org/docs/2.0/en/vhosts/name-based.html">Name-based Virtual Host</a>, select "CNAME".
     </dd>
     <dt>preference</dt>
     <dd><input name="preference" type="text" value="{{ surrogate.preference }}" /></dd>
@@ -50,6 +42,4 @@
 <br>
 <input type="submit" value="Update surrogate">
 </form>
-
-</body>
-</html>
+{% endblock %}
