@@ -24,7 +24,15 @@
     <dd><input name="continent" type="text" value="{{ surrogate.continent }}" /></dd>
     <dt>hostname</dt>
     <dd><input name="hostname" type="text" value="{{ surrogate.hostname }}" /></dd>
-    <dt>targetnet(*2)</dt>
+    <dt>target AS(*2)</dt>
+    <dd>
+      {% if surrogate.targetnet %}
+      <input name="targetasnum" type="text" value="{{ surrogate.targetasnum }}" />
+      {% else %}
+      <input name="targetasnum" type="text" /><span class="prefred">UPDATE</span>
+      {% endif %}      
+    </dd> 
+    <dt>target net(*3)</dt>
     <dd>
       {% if surrogate.targetnet %}
       <input name="targetnet" type="text" value="{{ surrogate.targetnet }}" />
@@ -36,7 +44,9 @@
 
 (*1)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
 <br>
-(*2)cf. "128.59.0.0/16", "130.34.0.0/16"
+(*2)cf. 2500, 2516
+<br>
+(*3)cf. "128.59.0.0/16", "130.34.0.0/16"
 <br>
 "Preference" High = 10, Middle = 100, Low = 1000, Minimum = 9999.
 <br>

@@ -5,6 +5,7 @@ import cgi
 import os
 from models import Surrogate
 import helptool
+import logging
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -90,6 +91,7 @@ class UpdateSurrogate(webapp.RequestHandler):
     s_hostname = self.request.get("hostname")
     s_targetnet = self.request.get("targetnet")
     s_type = self.request.get("type")
+    s_targetasnum = self.request.get("targetasnum")
 
     if helptool.ipFormatCheck(s_ip):
       if helptool.countryFormatCheck(s_country):
@@ -101,6 +103,7 @@ class UpdateSurrogate(webapp.RequestHandler):
         surrogate.type = s_type
         if helptool.targetnetFormatCheck(s_targetnet):
           surrogate.targetnet = s_targetnet
+        surrogate.targetasnum = int(s_targetasnum)
         surrogate.put()
 
     self.redirect("/managesurrogate")
@@ -120,6 +123,7 @@ class AddSurrogate(webapp.RequestHandler):
     s_continent = self.request.get("continent")
     s_hostname = self.request.get("hostname")
     s_targetnet = self.request.get("targetnet")
+    s_targetasnum = self.request.get("targetasnum")
 
     if helptool.ipFormatCheck(s_ip):
       if helptool.countryFormatCheck(s_country):
@@ -130,6 +134,7 @@ class AddSurrogate(webapp.RequestHandler):
         surrogate.hostname = s_hostname
         if helptool.targetnetFormatCheck(s_targetnet):
           surrogate.targetnet = s_targetnet
+        surrogate.targetasnum = int(s_targetasnum)
         surrogate.put()
 
     self.redirect("/managesurrogate")

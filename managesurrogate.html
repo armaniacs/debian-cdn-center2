@@ -4,13 +4,14 @@
 
 {% if f_login %}
 <form method="post" action="addsurrogate">
-<table border=6>
+<table border=7>
   <caption>surrogates</caption>
   <tr>
     <th>ip address</th>
     <th>preference (*1)</th>
-    <th>targetnet(*2)</th>
-    <th>country (*3)</th>
+    <th>target AS(*2)</th>
+    <th>target CIDR(*3)</th>
+    <th>country (*4)</th>
     <th>continent</th>
     <th>hostname</th>
 
@@ -26,6 +27,7 @@
 	<option value="9999">Minimum</option>
       </select>    
     </th>
+    <th><input name="targetas" type="text" /></th>
     <th><input name="targetnet" type="text" /></th>
     <th><input name="country" type="text" /></th>
     <th>
@@ -49,10 +51,13 @@
 </table>
 (*1)"Preference" High = 10, Middle = 100, Low = 1000, Minimum = 9999.
 <br>
-(*2)cf. "128.59.0.0/16", "130.34.0.0/16".
+(*2)cf. 2516
 You can check your BGP Prefix by whois -h whois.cymru.com " -v 1.2.3.4".
 <br>
-(*3)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
+(*3)cf. "128.59.0.0/16", "130.34.0.0/16".
+You can check your BGP Prefix by whois -h whois.cymru.com " -v 1.2.3.4".
+<br>
+(*4)Please fill country name in three-letter country codes. ((<a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO-3166</a>, cf. DEU, FRA, JPN, USA))
 <br>
 <input type="submit" value="add surrogate">
 </form>
@@ -67,7 +72,7 @@ Process time: {{ keika }}
 <form method="post" action="removesurrogate">
 <input type="submit" value="update">
 {% endif %}
-<table border=11>
+<table border=12>
   <tr>
     <th>Delete</th>
     <th>ip address</th>
@@ -75,7 +80,8 @@ Process time: {{ keika }}
     <th>time</th>
     <th>lastModifiedTime</th>
     <th>alive</th>
-    <th>targetnet</th>
+    <th>target AS</th>
+    <th>target net</th>
     <th>country</th>
     <th>continent</th>
     <th>checkpref</th>
@@ -107,6 +113,7 @@ Process time: {{ keika }}
     <th>{{ surrogate.time }}</th>
     <th><a href="http://{{ surrogate.ip }}/debian/project/trace/ftp-master.debian.org" target="_blank">{{ surrogate.lastModifiedTime }}</a></th>
     <th>{{ surrogate.alive }}</th>
+    <th>{{ surrogate.targetasnum }}</th>
     <th>{{ surrogate.targetnet }}</th>    
     <th>{{ surrogate.country|escape }}</th>
     <th>{{ surrogate.continent }}</th>

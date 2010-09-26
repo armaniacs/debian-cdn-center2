@@ -15,6 +15,7 @@
 "continent":"{{su.continent}}",
 "checkpref":"{{su.checkpref}}",
 "targetnet":"{{su.targetnet}}",
+"targetasnum":"{{su.targetasnum}}",
 "tracefile":"{{su.tracefile}}"}
 {% endfor %}
 ]

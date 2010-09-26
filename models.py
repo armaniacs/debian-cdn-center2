@@ -20,3 +20,4 @@ class Surrogate(db.Model):
     nouse = db.BooleanProperty()
     failreason = db.StringProperty()
     targetnet = db.StringProperty()
+    targetasnum = db.IntegerProperty()
