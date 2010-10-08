@@ -103,7 +103,8 @@ class UpdateSurrogate(webapp.RequestHandler):
         surrogate.type = s_type
         if helptool.targetnetFormatCheck(s_targetnet):
           surrogate.targetnet = s_targetnet
-        surrogate.targetasnum = int(s_targetasnum)
+        if s_targetasnum:
+          surrogate.targetasnum = int(s_targetasnum)
         surrogate.put()
 
     self.redirect("/managesurrogate")
@@ -134,7 +135,8 @@ class AddSurrogate(webapp.RequestHandler):
         surrogate.hostname = s_hostname
         if helptool.targetnetFormatCheck(s_targetnet):
           surrogate.targetnet = s_targetnet
-        surrogate.targetasnum = int(s_targetasnum)
+        if s_targetasnum:
+          surrogate.targetasnum = int(s_targetasnum)
         surrogate.put()
 
     self.redirect("/managesurrogate")

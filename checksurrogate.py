@@ -25,7 +25,7 @@ class CheckSurrogate(webapp.RequestHandler):
         
         check_server_count = 0
         check_period = 600
-        mirrordelay = 604800
+        mirrordelay = 86400
         t1 = datetime.datetime.now()
         lm = ''
         dm = ''
